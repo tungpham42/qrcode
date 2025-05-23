@@ -44,6 +44,10 @@ h4 {
   align-items: center !important;
 }
 
+.card-body {
+  padding: 1.5rem 2rem !important;
+}
+
 .form-label {
   font-weight: 600 !important;
   font-size: 0.95rem !important;
