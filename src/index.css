@@ -1,0 +1,166 @@
+:root {
+  --primary-gradient: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 100%
+  ) !important;
+  --primary-hover: linear-gradient(135deg, #5a6fd1 0%, #6a4299 100%) !important;
+  --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1) !important;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+body {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+  line-height: 1.6 !important;
+}
+
+h2,
+h4 {
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  letter-spacing: -0.025em !important;
+}
+
+.card {
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: var(--card-shadow) !important;
+  overflow: hidden !important;
+  transition: var(--transition) !important;
+}
+
+.card:hover {
+  box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-header {
+  padding: 1.5rem 2rem !important;
+  background: white !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.form-label {
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  color: #475569 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.form-control,
+.form-select {
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.95rem !important;
+  transition: var(--transition) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #a5b4fc !important;
+  box-shadow: 0 0 0 3px rgba(199, 210, 254, 0.5) !important;
+}
+
+.form-select {
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23475569' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 16px 12px !important;
+}
+
+.btn-primary {
+  background: var(--primary-gradient) !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  padding: 1rem 2.5rem !important;
+  border: none !important;
+  letter-spacing: 0.5px !important;
+  transition: var(--transition) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-primary:active {
+  transform: translateY(0) !important;
+}
+
+.qr-container {
+  padding: 2.5rem !important;
+  background: #fff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  transition: var(--transition) !important;
+  margin: 0 auto !important;
+  max-width: fit-content !important;
+}
+
+.qr-container:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+.language-select {
+  max-width: 180px !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0 !important;
+    transform: translateY(10px) scale(0.95) !important;
+  }
+  to {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+  }
+}
+
+.qr-container {
+  animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: flex-start !important;
+  }
+
+  .language-select {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+.header-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  flex-wrap: wrap !important;
+}
+
+.header-text {
+  flex: 1 !important;
+  min-width: 200px !important; /* Prevents text from being too squeezed */
+}
+
+.language-select-container {
+  margin-left: auto !important; /* Pushes it to the right */
+  flex-shrink: 0 !important; /* Prevents shrinking */
+  width: 128px !important; /* Fixed width for the select */
+  max-width: 100% !important; /* Ensures it doesn't overflow */
+}
