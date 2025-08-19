@@ -485,7 +485,7 @@ const QRCodeGenerator = () => {
                             max={40}
                             value={centerImgSizePct}
                             onChange={(e) =>
-                              setCenterImg(parseInt(e.target.value))
+                              setCenterImgSizePct(parseInt(e.target.value))
                             }
                           />
                           <div className="small text-muted">
