@@ -41,6 +41,11 @@ const translations = {
     placeholderEmail: "example@domain.com",
     placeholderSubject: "Enter email subject",
     placeholderBody: "Enter email body",
+    centerImage: "Center Image (Logo)",
+    uploadImage: "Upload Image",
+    removeImage: "Remove",
+    imageSize: "Image Size (%)",
+    excavate: "Excavate behind image",
   },
   vi: {
     title: "Trình Tạo Mã QR",
@@ -70,6 +75,11 @@ const translations = {
     placeholderEmail: "ten@mien.com",
     placeholderSubject: "Nhập chủ đề email",
     placeholderBody: "Nhập nội dung email",
+    centerImage: "Ảnh ở giữa (Logo)",
+    uploadImage: "Tải ảnh lên",
+    removeImage: "Xóa",
+    imageSize: "Kích thước ảnh (%)",
+    excavate: "Làm trống phía sau ảnh",
   },
 };
 
@@ -93,6 +103,9 @@ const QRCodeGenerator = () => {
   const [fgColor, setFgColor] = useState("#000000");
   const [bgColor, setBgColor] = useState("#ffffff");
   const [isGenerated, setIsGenerated] = useState(false);
+  const [centerImg, setCenterImg] = useState(null);
+  const [centerImgSizePct, setCenterImgSizePct] = useState(28); // % of QR size
+  const [excavate, setExcavate] = useState(true);
 
   const t = useMemo(() => translations[lang], [lang]);
 
@@ -116,6 +129,14 @@ const QRCodeGenerator = () => {
     setQrData(data);
     setIsGenerated(true);
   };
+
+  const readFileAsDataURL = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
 
   const downloadQR = () => {
     const svg = document.getElementById("qr-code");
@@ -413,6 +434,76 @@ const QRCodeGenerator = () => {
                       </div>
                     </Form.Group>
                   </Col>
+                  <Col md={12} className="mt-4">
+                    <Form.Group>
+                      <Form.Label className="d-flex align-items-center">
+                        <FontAwesomeIcon
+                          icon={faQrcode}
+                          className="me-2 text-muted"
+                        />
+                        {t.centerImage}
+                      </Form.Label>
+
+                      {!centerImg ? (
+                        <Form.Control
+                          type="file"
+                          accept="image/*"
+                          className="shadow-sm"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const dataUrl = await readFileAsDataURL(file);
+                            setCenterImg(String(dataUrl));
+                          }}
+                        />
+                      ) : (
+                        <div className="d-flex align-items-center gap-3">
+                          <img
+                            src={centerImg}
+                            alt="Center"
+                            style={{
+                              height: 40,
+                              width: 40,
+                              objectFit: "contain",
+                            }}
+                          />
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={() => setCenterImg(null)}
+                          >
+                            {t.removeImage}
+                          </Button>
+                        </div>
+                      )}
+
+                      <Row className="mt-3">
+                        <Col md={6} className="mb-3">
+                          <Form.Label>{t.imageSize}</Form.Label>
+                          <Form.Range
+                            min={10}
+                            max={40}
+                            value={centerImgSizePct}
+                            onChange={(e) =>
+                              setCenterImg(parseInt(e.target.value))
+                            }
+                          />
+                          <div className="small text-muted">
+                            {centerImgSizePct}%
+                          </div>
+                        </Col>
+                        <Col md={6} className="mb-3 d-flex align-items-end">
+                          <Form.Check
+                            type="switch"
+                            id="excavate-switch"
+                            label={t.excavate}
+                            checked={excavate}
+                            onChange={(e) => setExcavate(e.target.checked)}
+                          />
+                        </Col>
+                      </Row>
+                    </Form.Group>
+                  </Col>
                 </Row>
               </div>
 
@@ -449,6 +540,16 @@ const QRCodeGenerator = () => {
                   bgColor={bgColor}
                   level="H"
                   includeMargin={false}
+                  {...(centerImg
+                    ? {
+                        imageSettings: {
+                          src: centerImg,
+                          height: Math.round((qrSize * centerImgSizePct) / 100),
+                          width: Math.round((qrSize * centerImgSizePct) / 100),
+                          excavate: excavate,
+                        },
+                      }
+                    : {})}
                 />
               </div>
               <Button
